@@ -1,0 +1,117 @@
+public class BinarySearchTree <T extends Comparable <T>>{
+    private  Node root;
+    public BinarySearchTree(){
+        root = null;
+    }
+    public boolean findAux(T id, Node right){
+        if(root == null)
+            return false;
+        if(root.data == id)
+            return true;
+        if((root.data).compareTo(id) > 0)
+            return findAux(id, root.left);
+        return findAux(id, root.right);
+    }
+    public boolean find(T id){
+        return findAux(id,root);
+    }
+    public void  insert(T id){
+        root = insertAux(id,root);   
+    }
+    public Node <T> insertAux(T id,Node <T>root){ 
+        Node <T> myNode = new Node <T> (id);
+        if(root == null)
+            root = myNode;
+        if((root.data) .compareTo(id) == 0)
+            return root;
+        if((root.data) .compareTo(id) < 0)
+            root.left = insertAux(id,root.left);
+        else
+            root.right = insertAux(id, root.right);
+        return root;
+    }
+    public void display(Node root){
+        if(root != null){
+            display(root.left);
+            System.out.print(" " + root.data);
+            display(root.right);
+        }
+    }
+    
+    public static void main(String [] args){
+        BinarySearchTree <Integer> tree = new BinarySearchTree <Integer>(); 
+        
+        tree.insert(150);
+        tree.insert(75);
+        tree.insert(11);
+        tree.insert(0);
+        tree.insert(58);
+        tree.insert(36);
+        tree.insert(113);
+        tree.insert(42);
+        tree.insert(17);
+        tree.insert(9);
+        tree.insert(3);  
+
+        System.out.println("Original Tree: ");
+        tree.display(tree.root);
+        System.out.println();
+        
+        System.out.println("\nInorder traversal of binary tree is "); 
+        tree.inorderTraversal(); 
+        System.out.println();
+        
+        System.out.println("\nPreorder traversal of binary tree is "); 
+        tree.preorderTraversal(); 
+        System.out.println();
+        
+        System.out.println("\nPostorder traversal of binary tree is "); 
+        tree.postorderTraversal();    
+    }
+
+    public void inorderTraversal(Node node){
+        if(node == null)
+            return;
+        inorderTraversal(node.left);
+        System.out.println(node.data + " ");
+        inorderTraversal(node.right);
+    }
+
+    public void preorderTraversal(Node node){
+        if(node == null)
+            return;
+        System.out.println(node.data + " ");
+        preorderTraversal(node.left);
+        preorderTraversal(node.right);
+    }
+
+    public void postorderTraversal(Node node){
+        if(node == null)
+            return;
+        postorderTraversal(node.left);
+        postorderTraversal(node.right);
+        System.out.println(node.data + " ");
+    }
+
+    public void inorderTraversal(){
+        inorderTraversal(root);   
+    }
+
+    public void preorderTraversal(){
+        preorderTraversal(root);   
+    }
+
+    public void postorderTraversal(){
+        postorderTraversal(root);   
+    }
+}
+class Node <T extends Comparable <T>>{
+    T data;
+    Node <T> left;
+    Node <T> right;
+    Node (T data){
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
